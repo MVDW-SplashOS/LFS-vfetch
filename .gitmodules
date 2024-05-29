@@ -1,0 +1,3 @@
+[submodule "SourceStream"]
+	path = SourceStream
+	url = https://github.com/MVDW-SplashOS/SourceStream.git

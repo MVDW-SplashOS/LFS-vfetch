@@ -1,4 +1,7 @@
+from SourceStream.SourceStream.task.tasks import modifyEdition
+
 import requests
+import json
 from bs4 import BeautifulSoup as BS
 
 def get_package_info()->list:
@@ -24,3 +27,36 @@ def get_package_info()->list:
         packages_list.append(package)
         
     return packages_list
+
+def get_package_mapping(file):
+    with open(file) as json_data:
+        return json.load(json_data)
+
+
+def check_mapping(packages, mapping):
+    sucsess = True
+    for package in packages:
+        if not mapping.get(package[0]):
+            print("Package " + package[0] + " has no mapping.")
+            sucsess = False
+
+    return sucsess
+
+
+
+
+if __name__=="__main__":
+    try:
+        packages = get_package_info()
+        mapping = get_package_mapping("mapping.json")
+
+
+        if not check_mapping(packages, mapping):
+            print("Not all packages are mapped, exiting...")
+            exit(0)
+
+
+    except KeyboardInterrupt:
+        logger.log.info("Interrupt signal received.")
+
+
